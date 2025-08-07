@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "name_for_human": "Google Calendar Reader",
+  "name_for_model": "calendarReader",
+  "description_for_human": "Access your Google Calendar events",
+  "description_for_model": "Use this to fetch events from the user's Google Calendar using OAuth.",
+  "auth": {
+    "type": "oauth",
+    "client_url": "https://chat.openai.com/gpts",
+    "authorization_url": "https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/calendar.readonly",
+    "token_url": "https://oauth2.googleapis.com/token",
+    "client_id": "YOUR_CLIENT_ID",
+    "client_secret": "YOUR_CLIENT_SECRET"
+  },
+  "api": {
+    "type": "openapi",
+    "url": "https://your-domain.com/.well-known/openapi.yaml",
+    "is_user_authenticated": true
+  }
+}
