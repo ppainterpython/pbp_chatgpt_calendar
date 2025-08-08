@@ -2,6 +2,7 @@ openapi: 3.1.0
 info:
   title: Google Calendar API Proxy
   version: 1.0.0
+  description: Get upcoming events from the user's primary Google Calendar.
 servers:
   - url: https://www.googleapis.com
 paths:
@@ -9,6 +10,7 @@ paths:
     get:
       operationId: getCalendarEvents
       summary: Get upcoming calendar events
+      description: Returns a list of upcoming events from the user's primary calendar.
       parameters:
         - in: query
           name: timeMin
@@ -16,25 +18,73 @@ paths:
             type: string
             format: date-time
           required: true
-          description: Start time of the events
+          description: The starting date and time (inclusive) of events to return.
         - in: query
           name: maxResults
           schema:
             type: integer
           required: false
-          description: Max number of events to return
+          description: Maximum number of events to return.
         - in: query
           name: singleEvents
           schema:
             type: boolean
+            default: true
           required: false
-          description: Expand recurring events
+          description: Whether to expand recurring events into instances and only return single one-off events.
         - in: query
           name: orderBy
           schema:
             type: string
+            enum: [startTime]
+            default: startTime
           required: false
-          description: Order of events
+          description: The order of the events returned. Must be startTime if singleEvents is true.
       responses:
         '200':
           description: A list of calendar events
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                  summary:
+                    type: string
+                  items:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        summary:
+                          type: string
+                        description:
+                          type: string
+                        start:
+                          type: object
+                          properties:
+                            dateTime:
+                              type: string
+                            date:
+                              type: string
+                        end:
+                          type: object
+                          properties:
+                            dateTime:
+                              type: string
+                            date:
+                              type: string
+      security:
+        - OAuth2: [calendar]
+
+components:
+  securitySchemes:
+    OAuth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://accounts.google.com/o/oauth2/v2/auth
+          tokenUrl: https://oauth2.googleapis.com/token
+          scopes:
+            calendar: Access your Google Calendar
