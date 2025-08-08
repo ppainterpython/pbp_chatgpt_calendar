@@ -89,3 +89,4 @@ components:
           scopes:
             calendar: Access your Google Calendar
   schemas: {}  # ✅ Required, even if empty
+# End of openapi.yaml
