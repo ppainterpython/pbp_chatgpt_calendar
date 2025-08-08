@@ -88,3 +88,4 @@ components:
           tokenUrl: https://oauth2.googleapis.com/token
           scopes:
             calendar: Access your Google Calendar
+  schemas: {}  # ✅ Required, even if empty
